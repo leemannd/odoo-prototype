@@ -172,11 +172,15 @@ class Base(models.AbstractModel):
         fields_info = self.fields_get(_fields)
         for fname, info in fields_info.iteritems():
             if self._dj_is_file_field(fname, info):
+                if fname == 'signature':
+                    pass
+                    # import pdb;pdb.set_trace()
                 res.append((fname, info))
         return res
 
     def _dj_is_file_field(self, fname, info):
-        return (info['type'] in self._dj_file_fields_types or
+        # import pdb;pdb.set_trace()
+        return (info.get('store') and info['type'] in self._dj_file_fields_types or
                 fname in self._dj_file_fields_names)
 
     def _dj_handle_file_field_read(self, fname, info, records):
